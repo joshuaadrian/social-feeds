@@ -34,7 +34,7 @@ None.
 ###0.2.0
 
 * Moved social feed caches to be stored as an option in the WP database.
-* Using new twitter autentication library
+* Using new twitter authentication library
 * Using sass instead of less now.
 
 ###0.1.0
