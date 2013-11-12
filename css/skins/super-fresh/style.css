@@ -1,0 +1,170 @@
+/************************************************************************/
+/* GLOBAL STYLES
+/************************************************************************/
+.group:before,
+.group:after {
+  content: "";
+  display: table; }
+
+.group:after {
+  clear: both; }
+
+.group {
+  zoom: 1;
+  /* For IE 6/7 (trigger hasLayout) */ }
+
+/************************************************************************/
+/* TWITTER STYLES
+/************************************************************************/
+.tweets {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 20px;
+  list-style-type: none; }
+
+.tweet {
+  display: block;
+  padding: 20px 0;
+  margin: 0px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #222;
+  border-top: 1px dotted #d5d5d5; }
+
+.tweet:first-child {
+  border-top: 0px dotted #fff; }
+
+.tweet a {
+  position: relative;
+  color: #999;
+  text-decoration: none; }
+
+.tweet a:hover {
+  color: #000;
+  text-decoration: none;
+  top: -1px;
+  padding-bottom: 1px;
+  border-bottom: 1px dotted #999999; }
+
+.tweet .tweet-time {
+  display: block;
+  margin: 5px 0 0;
+  color: #ccc; }
+
+/************************************************************************/
+/* INSTAGRAM STYLES
+/************************************************************************/
+.instagrams {
+  width: 100%;
+  margin: 0 0 0 -10px;
+  padding: 0;
+  list-style-type: none !important; }
+
+.instagram {
+  position: relative;
+  float: left;
+  height: 100px;
+  width: 100px;
+  margin: 0 0 10px 10px !important; }
+
+.instagrams .instagram-link {
+  display: block; }
+
+.instagrams .instagram-link .instagram-image {
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  width: 100px;
+  max-width: 100%; }
+
+.instagram-likes-count {
+  position: absolute;
+  display: block;
+  height: 18px;
+  padding: 0px 5px 0px 23px;
+  bottom: 5px;
+  right: 5px;
+  background: url(instagram-heart.png) 5px center no-repeat #333333;
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px; }
+
+.instagram-likers {
+  padding: 0;
+  margin: 0 0 0 600px;
+  width: 200px;
+  list-style-type: none; }
+
+.instagram-likers .instagram-liker {
+  float: left;
+  width: 40px;
+  margin: 5px 0 0 5px;
+  background-color: #000; }
+
+.instagram-created-time {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 5px;
+  color: #d5d5d5;
+  width: 175px;
+  text-align: center;
+  display: block;
+  font-size: 12px; }
+
+.instagram-likers .instagram-liker img {
+  height: 40px;
+  width: 40px;
+  display: block;
+  margin: 0; }
+
+.instagram-details {
+  display: none; }
+
+.instagram-large {
+  float: left;
+  width: 600px;
+  height: 600px; }
+
+.instagram-caption {
+  position: absolute;
+  bottom: 40px;
+  left: 0px;
+  padding: 5px 10px;
+  color: #d5d5d5;
+  width: 580px;
+  display: block;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.7); }
+
+/************************************************************************/
+/* MODAL STYLES
+/************************************************************************/
+.sf-modal {
+  position: fixed;
+  display: none;
+  background-color: #1e1e1e;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99998;
+  cursor: pointer; }
+
+.sf-modal-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 785px;
+  height: 600px;
+  margin: -300px 0 0 -407px;
+  cursor: pointer;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99999; }

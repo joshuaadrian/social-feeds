@@ -1,30 +1,42 @@
-# Social Feeds
+#Social Feeds
+Contributors: Joshua Adrian
+Tags: Social, Feeds, Twitter, Instagram
+Requires at least: 2.5
+Tested up to: 3.7
+Stable tag: trunk
 
-Contributors: Joshua Adrian  
-Tags: WordPress, plugin, social, Twitter, Instagram  
-Requires at least: 3.0  
-Tested up to: 3.5  
+##Description
 
-## Description
+What this plugin does is to easily integrate social feeds via shortcodes into your website.
 
-What this plugin does is let you place a Twitter or Instagram feed on your WordPress site via shortcodes. Also comes with optional custom skins for styling both feeds.  
+##Features:
 
-## Included languages:
+* Shortcodes
+* Selectable default styling
+
+##Included languages:
 
 * English
 
-## Frequently Asked Questions
+##Frequently Asked Questions
 
-* None
+None.
 
-## Installation
+##Installation
 
 1. Download the plugin and unzip it.
 2. Upload the folder social-feeds/ to your /wp-content/plugins/ folder.
 3. Activate the plugin from your WordPress admin panel.
 4. Installation finished.
 
-## Changelog
+##Changelog
 
-### 0.5.0
+###0.2.0
+
+* Moved social feed caches to be stored as an option in the WP database.
+* Using new twitter autentication library
+* Using sass instead of less now.
+
+###0.1.0
+
 * Plugin released
