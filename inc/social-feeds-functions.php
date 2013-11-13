@@ -6,25 +6,38 @@
 
 add_filter('cron_schedules', 'sf_cron_schedules');
 
-function sf_cron_schedules() {
-	return array(
-		'every_minute' => array(
+function sf_cron_schedules( $schedules ) {
+	
+	if ( !array_key_exists('every_minute', $schedules) ) {
+		$schedules['every_minute'] = array(
 			'interval' => 60 * 1,
-			'display' => 'Every minute'
-		),
-		'every_five_minutes' => array(
+			'display' => __( 'Every minute' )
+		);
+	}
+
+	if ( !array_key_exists('every_five_minutes', $schedules) ) {
+		$schedules['every_five_minutes'] = array(
 			'interval' => 60 * 5,
-			'display' => 'Every five minutes'
-		),
-		'every_fifteen_minutes' => array(
+			'display' => __( 'Every five minutes' )
+		);
+	}
+
+	if ( !array_key_exists('every_fifteen_minutes', $schedules) ) {
+		$schedules['every_fifteen_minutes'] = array(
 			'interval' => 60 * 15,
-			'display' => 'Every fifteen minutes'
-		),
-		'every_half_hour' => array(
+			'display' => __( 'Every fifteen minutes' )
+		);
+	}
+
+	if ( !array_key_exists('every_half_hour', $schedules) ) {
+		$schedules['every_half_hour'] = array(
 			'interval' => 60 * 30,
-			'display' => 'Every half hour'
-		)
-	);
+			'display' => __( 'Every half hour' )
+		);
+	}
+
+	return $schedules;
+
 }
 
 /************************************************************************/

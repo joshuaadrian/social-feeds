@@ -40,9 +40,9 @@ define('SF_PATH', plugin_dir_path(__FILE__));
 // DEFINE PLUGIN URL
 define('SF_URL_PATH', plugins_url() . '/social-feeds');
 // DEFINE PLUGIN ID
-define('PLUGINOPTIONS_ID', 'social-feeds');
+define('SF_PLUGINOPTIONS_ID', 'social-feeds');
 // DEFINE PLUGIN NICK
-define('PLUGINOPTIONS_NICK', 'Social Feeds');
+define('SF_PLUGINOPTIONS_NICK', 'Social Feeds');
 // DEFINE PLUGIN NICK
 register_activation_hook(__FILE__, 'sf_add_defaults');
 // DEFINE PLUGIN NICK
@@ -148,7 +148,7 @@ function sf_init() {
 
 // Add menu page
 function sf_add_options_page() {
-	add_options_page('Social Feeds', '<img class="menu_sf" src="' . plugins_url( 'images/social.png' , __FILE__ ) . '" alt="" />'.PLUGINOPTIONS_NICK, 'manage_options', PLUGINOPTIONS_ID, 'sf_render_form');
+	add_options_page('Social Feeds', '<img class="menu_sf" src="' . plugins_url( 'images/social.png' , __FILE__ ) . '" alt="" />'.SF_PLUGINOPTIONS_NICK, 'manage_options', SF_PLUGINOPTIONS_ID, 'sf_render_form');
 }
 
 // ------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ function sf_render_form() {
 
 			<div class="social-feeds-options-section">
 
-		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+		    	<form action="options.php" method="post" id="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form">
 
 		    		<?php
 
@@ -268,7 +268,7 @@ function sf_render_form() {
 
 		    <div class="social-feeds-options-section">
 
-		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+		    	<form action="options.php" method="post" id="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form">
 
 		    		<?php
 
@@ -314,7 +314,7 @@ function sf_render_form() {
 
 		    <div class="social-feeds-options-section">
 
-		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+		    	<form action="options.php" method="post" id="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form">
 
 		    		<?php
 
@@ -351,7 +351,7 @@ function sf_render_form() {
 
 	    	<div class="social-feeds-options-section">
 
-		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+		    	<form action="options.php" method="post" id="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo SF_PLUGINOPTIONS_ID; ?>-options-form">
 
 		    		<?php
 
@@ -472,9 +472,9 @@ function sf_validate_options( $input ) {
 /************************************************************************/
 
 function sf_plugin_action_links( $links, $file ) {
-	$tmp_id = PLUGINOPTIONS_ID . '/social-feeds.php';
+	$tmp_id = SF_PLUGINOPTIONS_ID . '/social-feeds.php';
 	if ( $file == $tmp_id ) {
-		$sf_links = '<a href="'.get_admin_url().'options-general.php?page='.PLUGINOPTIONS_ID.'">'.__('Settings').'</a>';
+		$sf_links = '<a href="'.get_admin_url().'options-general.php?page='.SF_PLUGINOPTIONS_ID.'">'.__('Settings').'</a>';
 		// make the 'Settings' link appear first
 		array_unshift( $links, $sf_links );
 	}
