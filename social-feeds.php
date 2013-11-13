@@ -5,7 +5,7 @@ Plugin Name: Social Feeds
 Plugin URI: https://github.com/joshuaadrian/social-feeds
 Description: Pull in Twitter and Instagram feeds. Place them with shortcodes.
 Author: Joshua Adrian
-Version: 0.2.0
+Version: 0.4.0
 Author URI: https://github.com/joshuaadrian/
 */
 
