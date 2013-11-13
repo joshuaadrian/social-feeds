@@ -6,7 +6,7 @@ Plugin URI: https://github.com/joshuaadrian/social-feeds
 Description: Pull in Twitter and Instagram feeds. Place them with shortcodes.
 Author: Joshua Adrian
 Version: 0.2.0
-Author URI: http://joshuaadrian.com
+Author URI: https://github.com/joshuaadrian/
 */
 
 /************************************************************************/
@@ -38,7 +38,7 @@ if (!function_exists('_log')) {
 // DEFINE PLUGIN BASE
 define('SF_PATH', plugin_dir_path(__FILE__));
 // DEFINE PLUGIN URL
-define( 'SF_URL_PATH', plugins_url() . '/social-feeds');
+define('SF_URL_PATH', plugins_url() . '/social-feeds');
 // DEFINE PLUGIN ID
 define('PLUGINOPTIONS_ID', 'social-feeds');
 // DEFINE PLUGIN NICK
@@ -143,7 +143,7 @@ function sf_init() {
 
 // Add menu page
 function sf_add_options_page() {
-	add_options_page('Social Feeds', '<img class="menu_sf" src="' . plugins_url( 'images/social.gif' , __FILE__ ) . '" alt="" />'.PLUGINOPTIONS_NICK, 'manage_options', PLUGINOPTIONS_ID, 'sf_render_form');
+	add_options_page('Social Feeds', '<img class="menu_sf" src="' . plugins_url( 'images/social.png' , __FILE__ ) . '" alt="" />'.PLUGINOPTIONS_NICK, 'manage_options', PLUGINOPTIONS_ID, 'sf_render_form');
 }
 
 // ------------------------------------------------------------------------------
@@ -155,137 +155,170 @@ function sf_add_options_page() {
 // ------------------------------------------------------------------------------
 
 // Render the Plugin options form
-function sf_render_form() { ?>
-	<div class="wrap">
+function sf_render_form() { 
 
-	    <?php 
-	    	global $sf_data;
-	    	screen_icon();
-	    ?>
+	global $sf_data;
+	
+	?>
 
-		    <h2>Social Feeds Settings</h2>
+	<div id="social-feeds-options" class="wrap">  
+    
+		<div class="icon32"><img src="<?php echo SF_URL_PATH . '/images/social-feeds-admin-icon.png'; ?>" alt="" /></div>
 
-		    <ul class="sf_pagination group">
-		    	<li class="sf-active" id="sf-pagination-twitter">
-		    		<a href="#sf-twitter">Twitter</a>
-		    	</li>
-		    	<li id="sf-pagination-instagram">
-		    		<a href="#sf-instagram">Instagram</a>
-		    	</li>
-		    	<!-- <li id="sf-pagination-facebook">
-		    		<a href="#sf-facebook">Facebook</a>
-		    	</li> -->
-		    	<li id="sf-pagination-settings">
-		    		<a href="#sf-settings">Settings</a>
-		    	</li>
-		    	<li id="sf-pagination-help">
-		    		<a href="#sf-help">Help</a>
-		    	</li>
-		    </ul>
+		<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'twitter_options'; ?>
+        
+		<h2 class="nav-tab-wrapper">  
+		  	<a href="?page=social-feeds&tab=twitter_options" class="nav-tab <?php echo $active_tab == 'twitter_options' ? 'nav-tab-active' : ''; ?>">Twitter</a>  
+		  	<a href="?page=social-feeds&tab=instagram_options" class="nav-tab <?php echo $active_tab == 'instagram_options' ? 'nav-tab-active' : ''; ?>">Instagram</a>  
+		  	<a href="?page=social-feeds&tab=settings_options" class="nav-tab <?php echo $active_tab == 'settings_options' ? 'nav-tab-active' : ''; ?>">Settings</a>
+		  	<a href="?page=social-feeds&tab=help_options" class="nav-tab <?php echo $active_tab == 'help_options' ? 'nav-tab-active' : ''; ?>">Help</a>  
+		</h2>
 
-		    <form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+		<?php if ( $active_tab == 'twitter_options' ) : ?>
 
-		    <ul class="sf_content">
+			<div class="social-feeds-options-section">
 
-		    	<li id="sf-twitter" class="sf-active">
-		    		
-			    		
-		    			<?php
-		    				settings_fields('sf_plugin_options');
-							$options = get_option('sf_options');
-		    			?>
+		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
 
-			    		<table class="form-table">
-					    	<tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter User</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_username]" value="<?php echo $options['twitter_username']; ?>" />
-								</td>
-							</tr>
-							<tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter Oauth Access Token</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_oauth_access_token]" value="<?php echo $options['twitter_oauth_access_token']; ?>" />
-								</td>
-							</tr>
-							<tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter Oauth Access Token Secret</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_oauth_access_token_secret]" value="<?php echo $options['twitter_oauth_access_token_secret']; ?>" />
-								</td>
-							</tr>
-							<tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter Consumer Key</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_consumer_key]" value="<?php echo $options['twitter_consumer_key']; ?>" />
-								</td>
-							</tr>
-							<tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter Consumer Secret</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_consumer_secret]" value="<?php echo $options['twitter_consumer_secret']; ?>" />
-								</td>
-							</tr>
-							<!-- <tr>
-						    	<th>
-						    		<label for="twitter_user">Twitter Search Term</label>
-						    	</th>
-						    	<td> 
-						    		<input type="text" size="57" name="sf_options[twitter_search_term]" value="<?php //echo $options['twitter_search_term']; ?>" />
-								</td>
-							</tr> -->
-							<tr>
-								<th>Twitter Options</th>
-						    	<td> 
-						    		<label><input name="sf_options[twitter_include_rts]" type="checkbox" value="1" <?php if (isset($options['twitter_include_rts'])) { checked('1', $options['twitter_include_rts']); } ?> /> Include Retweets</label><br />
+		    		<?php
 
-						    		<label><input name="sf_options[twitter_include_replies]" type="checkbox" value="1" <?php if (isset($options['twitter_include_replies'])) { checked('1', $options['twitter_include_replies']); } ?> /> Include Replies</label><br />
+					settings_fields('sf_plugin_options');
+					$options = get_option('sf_options');
 
-						    		<label><input name="sf_options[twitter_include_entities]" type="checkbox" value="1" <?php if (isset($options['twitter_include_entities'])) { checked('1', $options['twitter_include_entities']); } ?> /> Include Entities</label><br />
-								</td>
-							</tr>
-						</table>
+					?>
 
-		    	</li>
-		    	<li id="sf-instagram">
+		    		<h1>Twitter Settings</h1>
 
-			    		<table class="form-table">
+		    		<table class="form-table">
+				    	<tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter User</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_username]" value="<?php echo $options['twitter_username']; ?>" />
+							</td>
+						</tr>
+						<tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter Oauth Access Token</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_oauth_access_token]" value="<?php echo $options['twitter_oauth_access_token']; ?>" />
+							</td>
+						</tr>
+						<tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter Oauth Access Token Secret</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_oauth_access_token_secret]" value="<?php echo $options['twitter_oauth_access_token_secret']; ?>" />
+							</td>
+						</tr>
+						<tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter Consumer Key</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_consumer_key]" value="<?php echo $options['twitter_consumer_key']; ?>" />
+							</td>
+						</tr>
+						<tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter Consumer Secret</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_consumer_secret]" value="<?php echo $options['twitter_consumer_secret']; ?>" />
+							</td>
+						</tr>
+						<!-- <tr>
+					    	<th>
+					    		<label for="twitter_user">Twitter Search Term</label>
+					    	</th>
+					    	<td> 
+					    		<input type="text" size="57" name="sf_options[twitter_search_term]" value="<?php //echo $options['twitter_search_term']; ?>" />
+							</td>
+						</tr> -->
+						<tr>
+							<th>Twitter Options</th>
+					    	<td> 
+					    		<label><input name="sf_options[twitter_include_rts]" type="checkbox" value="1" <?php if (isset($options['twitter_include_rts'])) { checked('1', $options['twitter_include_rts']); } ?> /> Include Retweets</label><br />
 
-					    	<tr>
-						    	<th>
-						    		<label for="instagram_access_token">Instagram Access Token</label>
-						    	</th>
-						    	<td>
-									<input type="text" name="sf_options[instagram_access_token]" value="<?php echo $options['instagram_access_token']; ?>" />
-								</td>
-							</tr>
+					    		<label><input name="sf_options[twitter_include_replies]" type="checkbox" value="1" <?php if (isset($options['twitter_include_replies'])) { checked('1', $options['twitter_include_replies']); } ?> /> Include Replies</label><br />
 
-							<tr>
-						    	<th>
-						    		<label for="instagram_user_id">Instagram User ID</label>
-						    	</th>
-						    	<td>
-									<input type="text" name="sf_options[instagram_user_id]" value="<?php echo $options['instagram_user_id']; ?>" />
-								</td>
-							</tr>
+					    		<label><input name="sf_options[twitter_include_entities]" type="checkbox" value="1" <?php if (isset($options['twitter_include_entities'])) { checked('1', $options['twitter_include_entities']); } ?> /> Include Entities</label><br />
+							</td>
+						</tr>
+					</table>
 
-						</table>
+		    		<div class="social-feeds-form-action">
+		            	<p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		            </div>
 
-		    	</li>
-		    	<li id="sf-settings">
-		    		<div class="sf-copy">
-						<h2>Global Plugin Settings</h2>
-					</div>
+				</form>
+
+			</div>
+
+		<?php endif; ?>
+		<?php if ( $active_tab == 'instagram_options' ) : ?>
+
+		    <div class="social-feeds-options-section">
+
+		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+
+		    		<?php
+
+					settings_fields('sf_plugin_options');
+					$options = get_option('sf_options');
+
+					?>
+
+		    		<h1>Instagram Settings</h1>
+
+		    		<table class="form-table">
+
+				    	<tr>
+					    	<th>
+					    		<label for="instagram_access_token">Instagram Access Token</label>
+					    	</th>
+					    	<td>
+								<input type="text" name="sf_options[instagram_access_token]" value="<?php echo $options['instagram_access_token']; ?>" />
+							</td>
+						</tr>
+
+						<tr>
+					    	<th>
+					    		<label for="instagram_user_id">Instagram User ID</label>
+					    	</th>
+					    	<td>
+								<input type="text" name="sf_options[instagram_user_id]" value="<?php echo $options['instagram_user_id']; ?>" />
+							</td>
+						</tr>
+
+					</table>
+
+		    		<div class="social-feeds-form-action">
+		            	<p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		            </div>
+
+				</form>
+
+			</div>
+
+	    <?php endif; ?>
+		<?php if ( $active_tab == 'settings_options' ) : ?>
+
+	    	<div class="social-feeds-options-section">
+
+		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+
+		    		<?php
+
+					settings_fields('sf_plugin_options');
+					$options = get_option('sf_options');
+
+					?>
+
+		    		<h1>Settings</h1>
 
 		    		<table class="form-table">
 				    	<tr>
@@ -298,13 +331,14 @@ function sf_render_form() { ?>
 									<?php
 
 									if ( $handle = opendir( SF_PATH . 'css/skins' ) ) {
-									    while (false !== ($entry = readdir($handle))) {
+									    while ( false !== ( $entry = readdir( $handle ) ) ) {
 									    	if ($entry != "." && $entry != "..") { ?>
 									        	<option value='<?php echo $entry; ?>' <?php selected($entry, $options['skin']); ?>><?php echo ucwords( str_replace( '-', ' ', $entry ) ); ?></option>
 									    	<?php }
 									    }
 									    closedir($handle);
 									}
+
 									?>
 								</select>
 							</td>
@@ -322,59 +356,40 @@ function sf_render_form() { ?>
 							</td>
 						</tr>
 					</table>
-		    	</li>
-		    	<li id="sf-help">
-		    		<div class="sf-copy">
-		    			<?php
-		    			$text = file_get_contents(SF_PATH . 'README.md');
-							$html = Markdown($text);
-							echo $html;
-						?>
-						<h2>Using the ShortCodes and Their Options</h2>
-						
-						<h3>Twitter</h3>
-						<p>
-							This is the basic usage it will return the tweets in an unordered list.
-							<pre><code>[twitter_feed]</code></pre>
-						</p>
 
-						<p>
-							The Twitter shortcode has two options. Count and Date_Format
-							<pre><code>[twitter_feed]</code></pre>
-						</p>
-						
-						<h2>Header Level 2</h2>
-						
-						<ol>
-							<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-							<li>Aliquam tincidunt mauris eu risus.</li>
-						</ol>
-						
-						<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-						
-						<h3>Header Level 3</h3>
-						
-						<ul>
-							<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-							<li>Aliquam tincidunt mauris eu risus.</li>
-						</ul>
-						
-						<pre><code>
-						#header h1 a { 
-							display: block; 
-							width: 300px; 
-							height: 80px; 
-						}
-						</code></pre>
-					</div>		
-		    	</li>
-		    </ul>
-		    <p class="submit"><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
-		</form>
+		    		<div class="social-feeds-form-action">
+		            	<p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		            </div>
+
+				</form>
+
+			</div>
+
+	    <?php endif; ?>
+		<?php if ( $active_tab == 'help_options' ) : ?>
+
+		    <div class="social-feeds-options-section">
+
+	    		<div class="social-feeds-copy">
+	    			<?php
+
+    				$text = file_get_contents(SF_PATH . 'README.md');
+					$html = Markdown($text);
+					echo $html;
+
+					?>
+				</div>		
+
+			</div>
+
+		<?php endif; ?>
+
 		<div class="credits">
 			<p><?php echo $sf_data['Name']; ?> Plugin | Version <?php echo $sf_data['Version']; ?> | <a href="<?php echo $sf_data['PluginURI']; ?>">Plugin Website</a> | Author <a href="<?php echo $sf_data['AuthorURI']; ?>"><?php echo $sf_data['Author']; ?></a> | <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/" style="position:relative; top:3px; margin-left:3px"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><a href="http://joshuaadrian.com" target="_blank" class="alignright"><img src="<?php echo plugins_url( 'images/ja-logo.gif' , __FILE__ ); ?>" alt="Joshua Adrian" /></a></p>
 		</div>
+
 	</div>
+
 <?php
 }
 
@@ -386,21 +401,21 @@ function sf_validate_options( $input ) {
 
 	global $social_feeds_options;
 
-	$input['cron_frequency']           = wp_filter_nohtml_kses($input['cron_frequency']);
-	$input['skin']                     = wp_filter_nohtml_kses($input['skin']);
-	$input['twitter_cache']            = $social_feeds_options['twitter_cache'];
-	$input['twitter_error_log']        = $social_feeds_options['twitter_error_log'];
-	$input['twitter_username']         = wp_filter_nohtml_kses($input['twitter_username']);
+	$input['cron_frequency']           = isset( $input['cron_frequency'] ) ? wp_filter_nohtml_kses( $input['cron_frequency'] ) : $social_feeds_options['cron_frequency'];
+	$input['skin']                     = isset( $input['skin'] ) ? wp_filter_nohtml_kses( $input['skin'] ) : $social_feeds_options['skin'];
+	$input['twitter_cache']            = isset( $input['twitter_cache'] ) ? $input['twitter_cache'] : $social_feeds_options['twitter_cache'];
+	$input['twitter_error_log']        = isset( $input['twitter_error_log'] ) ? $input['twitter_error_log'] : $social_feeds_options['twitter_error_log'];
+	$input['twitter_username']         = isset( $input['twitter_username'] ) ? wp_filter_nohtml_kses( $input['twitter_username'] ) : $social_feeds_options['twitter_username'];
 	//$input['twitter_search_term']      = wp_filter_nohtml_kses($input['twitter_search_term']);
-	$input['twitter_post_count']       = wp_filter_nohtml_kses($input['twitter_post_count']);
-	$input['twitter_include_rts']      = wp_filter_nohtml_kses($input['twitter_include_rts']);
-	$input['twitter_include_replies']  = wp_filter_nohtml_kses($input['twitter_include_replies']);
-	$input['twitter_include_entities'] = wp_filter_nohtml_kses($input['twitter_include_entities']);
-	$input['instagram_cache']          = $social_feeds_options['instagram_cache'];
-	$input['instagram_error_log']      = $social_feeds_options['instagram_error_log'];
-	$input['instagram_access_token']   = wp_filter_nohtml_kses($input['instagram_access_token']);
-	$input['instagram_user_id']        = wp_filter_nohtml_kses($input['instagram_user_id']);
-	$input['instagram_count']          = wp_filter_nohtml_kses($input['instagram_count']);
+	$input['twitter_post_count']       = isset( $input['twitter_post_count'] ) ? wp_filter_nohtml_kses( $input['twitter_post_count'] ) : $social_feeds_options['twitter_post_count'];
+	$input['twitter_include_rts']      = isset( $input['twitter_include_rts'] ) ? wp_filter_nohtml_kses( $input['twitter_include_rts'] ) : $social_feeds_options['twitter_include_rts'];
+	$input['twitter_include_replies']  = isset( $input['twitter_include_replies'] ) ? wp_filter_nohtml_kses( $input['twitter_include_replies'] ) : $social_feeds_options['twitter_include_replies'];
+	$input['twitter_include_entities'] = isset( $input['twitter_include_entities'] ) ? wp_filter_nohtml_kses( $input['twitter_include_entities'] ) : $social_feeds_options['twitter_include_entities'];
+	$input['instagram_cache']          = isset( $input['instagram_cache'] ) ? $input['instagram_cache'] : $social_feeds_options['instagram_cache'];
+	$input['instagram_error_log']      = isset( $input['instagram_error_log'] ) ? $input['instagram_error_log'] : $social_feeds_options['instagram_error_log'];
+	$input['instagram_access_token']   = isset( $input['instagram_access_token'] ) ? wp_filter_nohtml_kses( $input['instagram_access_token'] ) : $social_feeds_options['instagram_access_token'];
+	$input['instagram_user_id']        = isset( $input['instagram_user_id'] ) ? wp_filter_nohtml_kses( $input['instagram_user_id'] ) : $social_feeds_options['instagram_user_id'];
+	$input['instagram_count']          = isset( $input['instagram_count'] ) ? wp_filter_nohtml_kses( $input['instagram_count'] ) : $social_feeds_options['instagram_count'];
 
 	return $input;
 }

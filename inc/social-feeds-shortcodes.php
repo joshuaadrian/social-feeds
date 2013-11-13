@@ -11,7 +11,7 @@ function sf_twitter_feed( $atts, $content = null ) {
 	// GET SHORTCODE OPTIONS
 	extract( shortcode_atts( array(
 		'date_format' => 'joshua__adrian',
-		'count' => '10'
+		'count' => '4'
 	), $atts ));
 
 	if ( $count > 20 )
