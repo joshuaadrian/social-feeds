@@ -68,8 +68,6 @@ function sf_instagram_feed( $atts, $content = null ) {
 
 			if ( $instagrams[$i]['link'] ) {
 
-				_log($instagrams[$i]);
-
 				$instagram_output .= '<li id="instagram-'.($i + 1).'" class="instagram"><a href="' . $instagrams[$i]['images']['standard_resolution']['url'] . '" class="instagram-link" target="_blank"><img class="instagram-image" src="' . $instagrams[$i]['images']['low_resolution']['url'] . '" />';
 				$instagram_output .= '<span class="instagram-likes-count">' . $instagrams[$i]['likes']['count'] . '</span></a>';
 
@@ -101,5 +99,79 @@ function sf_instagram_feed( $atts, $content = null ) {
 }
 
 add_shortcode('instagram_feed', 'sf_instagram_feed');
+
+/************************************************************************/
+/* INSTAGRAM FEED SHORTCODE
+/************************************************************************/
+
+function sf_pinterest_feed( $atts, $content = null ) {
+
+	global $social_feeds_options, $sf_shortcode_pinterest;
+
+	$sf_shortcode_pinterest = true;
+
+	_log($atts); 
+
+	extract( shortcode_atts( array(
+		'pin'         => '',
+		'profile'     => '',
+		'board'       => '',
+		'imagewidth'  => '92',
+		'boardheight' => '175',
+		'boardwidth'  => 'auto'
+	), $atts ) );
+
+	$content_type = '';
+	$href = '';
+
+	if ( isset( $social_feeds_options['pinterest_pin'] ) ) {
+		$href = $social_feeds_options['pinterest_pin'];
+		$content_type = 'Pin';
+	}
+
+	if ( isset( $social_feeds_options['pinterest_profile'] ) ) {
+		$href = $social_feeds_options['pinterest_profile'];
+		$content_type = 'User';
+	}
+
+	if ( isset( $social_feeds_options['pinterest_board'] ) ) {
+		$href = $social_feeds_options['pinterest_board'];
+		$content_type = 'Board';
+	}
+
+	if ( !empty( $pin ) ) {
+		$href = $pin;
+		$content_type = 'Pin';
+	}
+
+	if ( !empty( $profile ) ) {
+		$href = $profile;
+		$content_type = 'User';
+	}
+
+	if ( !empty( $board ) ) {
+		$href = $board;
+		$content_type = 'Board';
+	}
+
+	if ( $imagewidth < 92 ) {
+		$imagewidth = 92;
+	}
+
+	if ( $boardheight < 175 ) {
+		$boardheight = 175;
+	}
+
+	if ( $boardwidth == 'auto' || $boardwidth < 130 ) {
+		$boardwidth = '';
+	} else {
+		$boardwidth = 'data-pin-board-width="' . $boardwidth . '"';
+	}
+		
+	return '<div class="pinterest-embed"><a data-pin-do="embed' . $content_type . '" href="' . $href . '" data-pin-scale-width="' . $imagewidth . '" data-pin-scale-height="' . $boardheight . '" ' . $boardwidth . '>Pinterest</a></div>';
+
+}
+
+add_shortcode('pinterestfeed', 'sf_pinterest_feed');
 
 ?>

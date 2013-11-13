@@ -52,6 +52,7 @@ function sf_social_calls() {
 		            			
 		// UPDATE SF OPTION WITH RETURNED TWITTER DATA
 	    $social_feeds_options['twitter_cache'] = json_decode( $twitter_data, true, 10 );
+	    $social_feeds_options['twitter_log'] = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
 	    
 	}
 
@@ -80,6 +81,7 @@ function sf_social_calls() {
 	    // CHECK FOR ERRORS AND WRITE JSON TO FILE
 	    if ( $instagrams['meta']['code'] == 200 ) {
 	    	$social_feeds_options['instagram_cache'] = removeInstagramEmoji( $instagrams['data'] );
+	    	$social_feeds_options['instagram_log'] = date("F j, Y, g:i a") . ' instagram success | rest call url =>  ' . $instagram_url . "\r\n\n";
 	    } else {
 			$social_feeds_options['instagram_error_log'] = date("F j, Y, g:i a") . ' instagram error json => ' . $instagram_data . ' | rest call url =>  ' . $instagram_url . "\r\n\n";
 		}

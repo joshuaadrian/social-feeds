@@ -35,6 +35,11 @@ None.
 
 ##Changelog
 
+###0.3.0
+
+* Added Pinterest embed capabilities.
+* Refactored to use the WP settings API
+
 ###0.2.0
 
 * Moved social feed caches to be stored as an option in the WP database.
@@ -68,3 +73,21 @@ This is the basic usage it will return the Instagrams in an unordered list.
 You can also set the amount of Instagrams to show, with a max up to 20 and a default of 8.
 
 	[instagram_feed count=10]
+
+###Pinterest
+					
+This is the basic usage it will embed the designated Pinterest board.
+
+	[pinterest_feed]
+
+You can also designate the pin to use in the Instagram shortcode and override the default pin designated in the Pinterest settings.
+
+	[pinterest_feed pin='http://www.pinterest.com/pin/99360735500167749/']
+
+You can also designate the profile to use in the Instagram shortcode and override the default profile designated in the Pinterest settings.
+
+	[pinterest_feed profile='http://www.pinterest.com/pinterest/']
+
+You can also designate the board to use in the Instagram shortcode and override the default board designated in the Pinterest settings.
+
+	[pinterest_feed board='http://www.pinterest.com/pinterest/pin-pets/']

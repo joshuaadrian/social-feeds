@@ -137,4 +137,21 @@ function twitter_relative_time( $time ) {
     else {
         return date('F y g:i a', $tweet_time);
     }
-};  
+};
+
+/************************************************************************/
+/* EMBED PINTEREST SCRIPT
+/************************************************************************/
+$sf_shortcode_pinterest = false;
+
+function social_feeds_print_my_script() {
+
+	global $sf_shortcode_pinterest;
+
+	if ( ! $sf_shortcode_pinterest )
+		return;
+
+	wp_print_scripts('social-feeds-pinterest');
+}
+
+add_action('wp_footer', 'social_feeds_print_my_script');

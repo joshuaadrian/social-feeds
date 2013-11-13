@@ -99,6 +99,7 @@ function sf_add_defaults() {
 			'skin'                              => 'none',
 			'twitter_cache'                     => '',
 			'twitter_error_log'                 => '',
+			'twitter_log'                       => '',
 			'twitter_username'                  => 'joshua__adrian',
 			'twitter_search_term'               => '#bananas',
 			'twitter_include_rts'               => '1',
@@ -109,9 +110,13 @@ function sf_add_defaults() {
 			'twitter_consumer_key'              => '',
 			'twitter_consumer_secret'           => '',
 			'instagram_cache'                   => '',
+			'instagram_log'                     => '',
 			'instagram_error_log'               => '',
 			'instagram_access_token'            => '',
 			'instagram_user_id'                 => '',
+			'pinterest_pin'                     => '',
+			'pinterest_profile'                 => '',
+			'pinterest_board'                   => '',
 			'default_settings'                  => ''
 		);
 
@@ -153,7 +158,6 @@ function sf_add_options_page() {
 // ACTUALLY RENDER THE PLUGIN OPTIONS FORM AS A SUB-MENU UNDER THE EXISTING
 // SETTINGS ADMIN MENU.
 // ------------------------------------------------------------------------------
-
 // Render the Plugin options form
 function sf_render_form() { 
 
@@ -169,9 +173,10 @@ function sf_render_form() {
         
 		<h2 class="nav-tab-wrapper">  
 		  	<a href="?page=social-feeds&tab=twitter_options" class="nav-tab <?php echo $active_tab == 'twitter_options' ? 'nav-tab-active' : ''; ?>">Twitter</a>  
-		  	<a href="?page=social-feeds&tab=instagram_options" class="nav-tab <?php echo $active_tab == 'instagram_options' ? 'nav-tab-active' : ''; ?>">Instagram</a>  
+		  	<a href="?page=social-feeds&tab=instagram_options" class="nav-tab <?php echo $active_tab == 'instagram_options' ? 'nav-tab-active' : ''; ?>">Instagram</a> 
+		  	<a href="?page=social-feeds&tab=pinterest_options" class="nav-tab <?php echo $active_tab == 'pinterest_options' ? 'nav-tab-active' : ''; ?>">Pinterest</a>  
 		  	<a href="?page=social-feeds&tab=settings_options" class="nav-tab <?php echo $active_tab == 'settings_options' ? 'nav-tab-active' : ''; ?>">Settings</a>
-		  	<a href="?page=social-feeds&tab=help_options" class="nav-tab <?php echo $active_tab == 'help_options' ? 'nav-tab-active' : ''; ?>">Help</a>  
+		  	<a href="?page=social-feeds&tab=wiki_options" class="nav-tab <?php echo $active_tab == 'wiki_options' ? 'nav-tab-active' : ''; ?>">Wiki</a>  
 		</h2>
 
 		<?php if ( $active_tab == 'twitter_options' ) : ?>
@@ -305,6 +310,77 @@ function sf_render_form() {
 			</div>
 
 	    <?php endif; ?>
+	    <?php if ( $active_tab == 'pinterest_options' ) : ?>
+
+		    <div class="social-feeds-options-section">
+
+		    	<form action="options.php" method="post" id="<?php echo PLUGINOPTIONS_ID; ?>-options-form" name="<?php echo PLUGINOPTIONS_ID; ?>-options-form">
+
+		    		<?php
+
+					settings_fields('sf_plugin_options');
+					$options = get_option('sf_options');
+
+					?>
+
+		    		<h1>Pinterest Settings</h1>
+
+		    		<table class="form-table">
+	
+				    	<tr>
+					    	<th>
+					    		<label for="pinterest_pin">Pinterest Pin</label>
+					    	</th>
+					    	<td>
+								<input type="text" name="sf_options[pinterest_pin]" value="<?php echo $options['pinterest_pin']; ?>" />
+							</td>
+						</tr>
+
+						<tr>
+					    	<th>
+					    	</th>
+					    	<td class="social-feeds-or">
+								&mdash; OR &mdash;
+							</td>
+						</tr>
+
+		    			<tr>
+					    	<th>
+					    		<label for="pinterest_board">Pinterest Profile</label>
+					    	</th>
+					    	<td>
+								<input type="text" name="sf_options[pinterest_profile]" value="<?php echo $options['pinterest_profile']; ?>" />
+							</td>
+						</tr>
+
+						<tr>
+					    	<th>
+					    	</th>
+					    	<td class="social-feeds-or">
+								&mdash; OR &mdash;
+							</td>
+						</tr>
+	
+				    	<tr>
+					    	<th>
+					    		<label for="pinterest_board">Pinterest Board</label>
+					    	</th>
+					    	<td>
+								<input type="text" name="sf_options[pinterest_board]" value="<?php echo $options['pinterest_board']; ?>" />
+							</td>
+						</tr>
+
+					</table>
+
+		    		<div class="social-feeds-form-action">
+		            	<p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		            </div>
+
+				</form>
+
+			</div>
+
+	    <?php endif; ?>
 		<?php if ( $active_tab == 'settings_options' ) : ?>
 
 	    	<div class="social-feeds-options-section">
@@ -366,7 +442,7 @@ function sf_render_form() {
 			</div>
 
 	    <?php endif; ?>
-		<?php if ( $active_tab == 'help_options' ) : ?>
+		<?php if ( $active_tab == 'wiki_options' ) : ?>
 
 		    <div class="social-feeds-options-section">
 
@@ -401,23 +477,30 @@ function sf_validate_options( $input ) {
 
 	global $social_feeds_options;
 
-	$input['cron_frequency']           = isset( $input['cron_frequency'] ) ? wp_filter_nohtml_kses( $input['cron_frequency'] ) : $social_feeds_options['cron_frequency'];
-	$input['skin']                     = isset( $input['skin'] ) ? wp_filter_nohtml_kses( $input['skin'] ) : $social_feeds_options['skin'];
-	$input['twitter_cache']            = isset( $input['twitter_cache'] ) ? $input['twitter_cache'] : $social_feeds_options['twitter_cache'];
-	$input['twitter_error_log']        = isset( $input['twitter_error_log'] ) ? $input['twitter_error_log'] : $social_feeds_options['twitter_error_log'];
-	$input['twitter_username']         = isset( $input['twitter_username'] ) ? wp_filter_nohtml_kses( $input['twitter_username'] ) : $social_feeds_options['twitter_username'];
-	//$input['twitter_search_term']      = wp_filter_nohtml_kses($input['twitter_search_term']);
-	$input['twitter_post_count']       = isset( $input['twitter_post_count'] ) ? wp_filter_nohtml_kses( $input['twitter_post_count'] ) : $social_feeds_options['twitter_post_count'];
-	$input['twitter_include_rts']      = isset( $input['twitter_include_rts'] ) ? wp_filter_nohtml_kses( $input['twitter_include_rts'] ) : $social_feeds_options['twitter_include_rts'];
-	$input['twitter_include_replies']  = isset( $input['twitter_include_replies'] ) ? wp_filter_nohtml_kses( $input['twitter_include_replies'] ) : $social_feeds_options['twitter_include_replies'];
-	$input['twitter_include_entities'] = isset( $input['twitter_include_entities'] ) ? wp_filter_nohtml_kses( $input['twitter_include_entities'] ) : $social_feeds_options['twitter_include_entities'];
-	$input['instagram_cache']          = isset( $input['instagram_cache'] ) ? $input['instagram_cache'] : $social_feeds_options['instagram_cache'];
-	$input['instagram_error_log']      = isset( $input['instagram_error_log'] ) ? $input['instagram_error_log'] : $social_feeds_options['instagram_error_log'];
-	$input['instagram_access_token']   = isset( $input['instagram_access_token'] ) ? wp_filter_nohtml_kses( $input['instagram_access_token'] ) : $social_feeds_options['instagram_access_token'];
-	$input['instagram_user_id']        = isset( $input['instagram_user_id'] ) ? wp_filter_nohtml_kses( $input['instagram_user_id'] ) : $social_feeds_options['instagram_user_id'];
-	$input['instagram_count']          = isset( $input['instagram_count'] ) ? wp_filter_nohtml_kses( $input['instagram_count'] ) : $social_feeds_options['instagram_count'];
+	$input['cron_frequency']                    = isset( $input['cron_frequency'] ) ? wp_filter_nohtml_kses( $input['cron_frequency'] ) : $social_feeds_options['cron_frequency'];
+	$input['skin']                              = isset( $input['skin'] ) ? wp_filter_nohtml_kses( $input['skin'] ) : $social_feeds_options['skin'];
+	$input['twitter_cache']                     = isset( $input['twitter_cache'] ) ? $input['twitter_cache'] : $social_feeds_options['twitter_cache'];
+	$input['twitter_error_log']                 = isset( $input['twitter_error_log'] ) ? $input['twitter_error_log'] : $social_feeds_options['twitter_error_log'];
+	$input['twitter_username']                  = isset( $input['twitter_username'] ) ? wp_filter_nohtml_kses( $input['twitter_username'] ) : $social_feeds_options['twitter_username'];
+	//$input['twitter_search_term']             = wp_filter_nohtml_kses($input['twitter_search_term']);
+	$input['twitter_oauth_access_token']        = isset( $input['twitter_oauth_access_token'] ) ? wp_filter_nohtml_kses( $input['twitter_oauth_access_token'] ) : $social_feeds_options['twitter_oauth_access_token'];
+	$input['twitter_oauth_access_token_secret'] = isset( $input['twitter_oauth_access_token_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_oauth_access_token_secret'] ) : $social_feeds_options['twitter_oauth_access_token_secret'];
+	$input['twitter_consumer_key']              = isset( $input['twitter_consumer_key'] ) ? wp_filter_nohtml_kses( $input['twitter_consumer_key'] ) : $social_feeds_options['twitter_consumer_key'];
+	$input['twitter_consumer_secret']           = isset( $input['twitter_consumer_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_consumer_secret'] ) : $social_feeds_options['twitter_consumer_secret'];
+	$input['twitter_include_rts']               = isset( $input['twitter_include_rts'] ) ? wp_filter_nohtml_kses( $input['twitter_include_rts'] ) : $social_feeds_options['twitter_include_rts'];
+	$input['twitter_include_replies']           = isset( $input['twitter_include_replies'] ) ? wp_filter_nohtml_kses( $input['twitter_include_replies'] ) : $social_feeds_options['twitter_include_replies'];
+	$input['twitter_include_entities']          = isset( $input['twitter_include_entities'] ) ? wp_filter_nohtml_kses( $input['twitter_include_entities'] ) : $social_feeds_options['twitter_include_entities'];
+	$input['instagram_cache']                   = isset( $input['instagram_cache'] ) ? $input['instagram_cache'] : $social_feeds_options['instagram_cache'];
+	$input['instagram_error_log']               = isset( $input['instagram_error_log'] ) ? $input['instagram_error_log'] : $social_feeds_options['instagram_error_log'];
+	$input['instagram_access_token']            = isset( $input['instagram_access_token'] ) ? wp_filter_nohtml_kses( $input['instagram_access_token'] ) : $social_feeds_options['instagram_access_token'];
+	$input['instagram_user_id']                 = isset( $input['instagram_user_id'] ) ? wp_filter_nohtml_kses( $input['instagram_user_id'] ) : $social_feeds_options['instagram_user_id'];
+	$input['instagram_count']                   = isset( $input['instagram_count'] ) ? wp_filter_nohtml_kses( $input['instagram_count'] ) : $social_feeds_options['instagram_count'];
+	$input['pinterest_profile']                 = isset( $input['pinterest_profile'] ) ? wp_filter_nohtml_kses( $input['pinterest_profile'] ) : $social_feeds_options['pinterest_profile'];
+	$input['pinterest_board']                   = isset( $input['pinterest_board'] ) ? wp_filter_nohtml_kses( $input['pinterest_board'] ) : $social_feeds_options['pinterest_board'];
+	$input['pinterest_pin']                     = isset( $input['pinterest_pin'] ) ? wp_filter_nohtml_kses( $input['pinterest_pin'] ) : $social_feeds_options['pinterest_pin'];
 
 	return $input;
+
 }
 
 /************************************************************************/
@@ -451,6 +534,7 @@ function skin_styles() {
 	$skin = get_option('sf_options');
 	$skin = $skin['skin'];
 
+	wp_register_script('social-feeds-pinterest', plugins_url('/js/social-feeds-pinterest.min.js', __FILE__), false, '1.0', true);
 	if ($skin != 'none') {
 		wp_register_style('sf-skin-default', plugins_url('/css/skins/'.$skin.'/style.css', __FILE__), false, '1.0.0');
 		wp_enqueue_style('sf-skin-default');
