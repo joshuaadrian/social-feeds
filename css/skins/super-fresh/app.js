@@ -4,6 +4,11 @@ jQuery(document).ready(function($) {
 
 	$('.instagram-link').live('click', function() {
 		var id = $(this).parent().attr('id');
+		var href = $(this).attr('href');
+		var image = $('<img />').load(function(){
+		  $(this).attr('src', href)
+		}).attr('class', 'instagram-large');
+		console.log(image);
 		$('.sf-modal-inner').html('<img src="' + $(this).attr('href') + '" alt="" class="instagram-large" />' + $('#' + id + '-details').html()).attr('id', id);
 		$('.sf-modal').fadeIn('fast');
 		return false;

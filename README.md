@@ -35,6 +35,10 @@ None.
 
 ##Changelog
 
+###0.4.0
+
+* Added widgets for each feed.
+
 ###0.3.0
 
 * Added Pinterest embed capabilities.
@@ -44,7 +48,7 @@ None.
 
 * Moved social feed caches to be stored as an option in the WP database.
 * Using new Twitter authentication library
-* Using SASS instead of less now.
+* Using SASS instead of Less now.
 
 ###0.1.0
 
@@ -56,7 +60,7 @@ None.
 					
 ###Twitter
 					
-This is the basic usage it will return the tweets in an unordered list.
+This is the basic widget will return the tweets in an unordered list.
 
 	[twitter_feed]
 
@@ -76,18 +80,43 @@ You can also set the amount of Instagrams to show, with a max up to 20 and a def
 
 ###Pinterest
 					
-This is the basic usage it will embed the designated Pinterest board.
+This is the basic usage that will embed the designated Pinterest board.
 
 	[pinterest_feed]
 
-You can also designate the pin to use in the Instagram shortcode and override the default pin designated in the Pinterest settings.
+You can also designate the content (you can use the URL of a pin, profile, or board) to use in the Instagram shortcode and override the default pin designated in the Pinterest settings.
 
-	[pinterest_feed pin='http://www.pinterest.com/pin/99360735500167749/']
+Example of a Pin:
 
-You can also designate the profile to use in the Instagram shortcode and override the default profile designated in the Pinterest settings.
+	[pinterest_feed content='http://www.pinterest.com/pin/99360735500167749/']
 
-	[pinterest_feed profile='http://www.pinterest.com/pinterest/']
+Example of a Profile:
 
-You can also designate the board to use in the Instagram shortcode and override the default board designated in the Pinterest settings.
+	[pinterest_feed content='http://www.pinterest.com/pinterest/']
+
+Example of a Board:
 
 	[pinterest_feed board='http://www.pinterest.com/pinterest/pin-pets/']
+
+##Using the Widgets and Their Options</h2>
+					
+###Twitter Widget
+					
+This is the basic widget will return the tweets in an unordered list.
+
+The only option is 'Count' which determines the number of Tweets to display.
+
+###Instagram
+					
+This is the basic widget will return the Instagrams in an unordered list.
+
+The only option is 'Count' which determines the number of Instagrams to display.
+
+###Pinterest
+					
+This is the basic widget will embed the designated Pinterest board.
+
+The only option is 'Content' which determines the Pinterest content to embed.
+
+
+	

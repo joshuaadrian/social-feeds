@@ -329,44 +329,10 @@ function sf_render_form() {
 	
 				    	<tr>
 					    	<th>
-					    		<label for="pinterest_pin">Pinterest Pin</label>
+					    		<label for="pinterest_pin">Pinterest Content URL</label>
 					    	</th>
 					    	<td>
-								<input type="text" name="sf_options[pinterest_pin]" value="<?php echo $options['pinterest_pin']; ?>" />
-							</td>
-						</tr>
-
-						<tr>
-					    	<th>
-					    	</th>
-					    	<td class="social-feeds-or">
-								&mdash; OR &mdash;
-							</td>
-						</tr>
-
-		    			<tr>
-					    	<th>
-					    		<label for="pinterest_board">Pinterest Profile</label>
-					    	</th>
-					    	<td>
-								<input type="text" name="sf_options[pinterest_profile]" value="<?php echo $options['pinterest_profile']; ?>" />
-							</td>
-						</tr>
-
-						<tr>
-					    	<th>
-					    	</th>
-					    	<td class="social-feeds-or">
-								&mdash; OR &mdash;
-							</td>
-						</tr>
-	
-				    	<tr>
-					    	<th>
-					    		<label for="pinterest_board">Pinterest Board</label>
-					    	</th>
-					    	<td>
-								<input type="text" name="sf_options[pinterest_board]" value="<?php echo $options['pinterest_board']; ?>" />
+								<input type="text" name="sf_options[pinterest_content]" value="<?php echo $options['pinterest_content']; ?>" />
 							</td>
 						</tr>
 
@@ -495,9 +461,7 @@ function sf_validate_options( $input ) {
 	$input['instagram_access_token']            = isset( $input['instagram_access_token'] ) ? wp_filter_nohtml_kses( $input['instagram_access_token'] ) : $social_feeds_options['instagram_access_token'];
 	$input['instagram_user_id']                 = isset( $input['instagram_user_id'] ) ? wp_filter_nohtml_kses( $input['instagram_user_id'] ) : $social_feeds_options['instagram_user_id'];
 	$input['instagram_count']                   = isset( $input['instagram_count'] ) ? wp_filter_nohtml_kses( $input['instagram_count'] ) : $social_feeds_options['instagram_count'];
-	$input['pinterest_profile']                 = isset( $input['pinterest_profile'] ) ? wp_filter_nohtml_kses( $input['pinterest_profile'] ) : $social_feeds_options['pinterest_profile'];
-	$input['pinterest_board']                   = isset( $input['pinterest_board'] ) ? wp_filter_nohtml_kses( $input['pinterest_board'] ) : $social_feeds_options['pinterest_board'];
-	$input['pinterest_pin']                     = isset( $input['pinterest_pin'] ) ? wp_filter_nohtml_kses( $input['pinterest_pin'] ) : $social_feeds_options['pinterest_pin'];
+	$input['pinterest_content']                 = isset( $input['pinterest_content'] ) ? wp_filter_nohtml_kses( $input['pinterest_content'] ) : $social_feeds_options['pinterest_content'];
 
 	return $input;
 
@@ -551,5 +515,6 @@ add_action('wp_enqueue_scripts', 'skin_styles');
 require SF_PATH . 'inc/social-feeds-functions.php';
 require SF_PATH . 'inc/social-feeds-events.php';
 require SF_PATH . 'inc/social-feeds-shortcodes.php';
+require SF_PATH . 'inc/social-feeds-widgets.php';
 
 ?>

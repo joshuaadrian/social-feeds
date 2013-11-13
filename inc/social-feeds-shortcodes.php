@@ -14,15 +14,18 @@ function sf_twitter_feed( $atts, $content = null ) {
 		'count' => '4'
 	), $atts ));
 
-	if ( $count > 20 )
-		$count = 20;
-
 	if ( !isset( $social_feeds_options['twitter_cache'] ) )
 		return;
 
 	// SET UP OUTPUT AND GET CACHED TWITTER FEED FILE
 	$twitter_output = '';
 	$tweets         = $social_feeds_options['twitter_cache'];
+
+	if ( $count > 20 || $count < 1 )
+		$count = 4;
+
+	if ( count($tweets) < $count )
+		$count = count($tweets);
 
 	for ( $i = 0; $i < $count; ++$i ) {
 
@@ -54,12 +57,15 @@ function sf_instagram_feed( $atts, $content = null ) {
 		'count' => '8'
 	), $atts ));
 
-	if ( $count > 20 )
-		$count = 20;
-
 	// SET UP OUTPUT AND GET LOG FILE
 	$instagram_output = '';
 	$instagrams       = $social_feeds_options['instagram_cache'];
+
+	if ( $count > 20 || $count < 1 )
+		$count = 8;
+
+	if ( count($instagrams) < $count )
+		$count = count($instagrams);
 
 	// CHECK IF LOG FILE IS NOT EMPTY
 	if ( $instagrams ) {
@@ -106,16 +112,12 @@ add_shortcode('instagram_feed', 'sf_instagram_feed');
 
 function sf_pinterest_feed( $atts, $content = null ) {
 
-	global $social_feeds_options, $sf_shortcode_pinterest;
+	global $social_feeds_options, $social_feeds_shortcode_pinterest;
 
-	$sf_shortcode_pinterest = true;
-
-	_log($atts); 
+	$social_feeds_shortcode_pinterest = true;
 
 	extract( shortcode_atts( array(
-		'pin'         => '',
-		'profile'     => '',
-		'board'       => '',
+		'content'     => '',
 		'imagewidth'  => '92',
 		'boardheight' => '175',
 		'boardwidth'  => 'auto'
@@ -124,33 +126,24 @@ function sf_pinterest_feed( $atts, $content = null ) {
 	$content_type = '';
 	$href = '';
 
-	if ( isset( $social_feeds_options['pinterest_pin'] ) ) {
-		$href = $social_feeds_options['pinterest_pin'];
+	if ( isset( $social_feeds_options['content'] ) ) {
+		$href = $social_feeds_options['content'];
 		$content_type = 'Pin';
 	}
 
-	if ( isset( $social_feeds_options['pinterest_profile'] ) ) {
-		$href = $social_feeds_options['pinterest_profile'];
-		$content_type = 'User';
-	}
-
-	if ( isset( $social_feeds_options['pinterest_board'] ) ) {
-		$href = $social_feeds_options['pinterest_board'];
-		$content_type = 'Board';
-	}
-
-	if ( !empty( $pin ) ) {
-		$href = $pin;
+	if ( !empty( $content ) ) {
+		$href = $content;
 		$content_type = 'Pin';
 	}
 
-	if ( !empty( $profile ) ) {
-		$href = $profile;
-		$content_type = 'User';
-	}
+	$url = parse_url($content);
+	$paths = explode('/',$url['path']);
 
-	if ( !empty( $board ) ) {
-		$href = $board;
+	if ( isset( $paths[1] ) && $paths[1] != 'pin' && ( !isset( $paths[2] ) || empty( $paths[2] ) ) ) {
+		$content_type = 'User';
+	} elseif ( isset( $paths[1] ) && $paths[1] == 'pin' ) {
+		$content_type = 'Pin';
+	} else {
 		$content_type = 'Board';
 	}
 
@@ -172,6 +165,6 @@ function sf_pinterest_feed( $atts, $content = null ) {
 
 }
 
-add_shortcode('pinterestfeed', 'sf_pinterest_feed');
+add_shortcode('pinterest_feed', 'sf_pinterest_feed');
 
 ?>
