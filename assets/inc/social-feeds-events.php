@@ -52,7 +52,7 @@ function sf_social_calls() {
 		            			->performRequest();
 		            			
 		// UPDATE SF OPTION WITH RETURNED TWITTER DATA
-	    $social_feeds_options['twitter_cache'] = json_decode( $twitter_data, true, 10 );
+	    $social_feeds_options['twitter_cache'] = removeTwitterEmoji( json_decode( $twitter_data, true, 10 ) );
 	    $social_feeds_options['twitter_log'] = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
 	    
 	}

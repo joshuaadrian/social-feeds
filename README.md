@@ -5,7 +5,7 @@ Tags: Social, Feeds, Twitter, Instagram
 
 Requires at least: 2.5
 
-Tested up to: 3.7
+Tested up to: 3.8.1
 
 Stable tag: trunk
 
