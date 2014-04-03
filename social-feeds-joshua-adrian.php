@@ -52,7 +52,7 @@ add_action( 'admin_init', 'sf_init' );
 // ADD LINK TO ADMIN
 add_action( 'admin_menu', 'sf_add_options_page' );
 // ADD LINK TO ADMIN
-add_filter( 'plugin_action_links', 'sf_plugin_action_links', 10, 2 );
+add_filter('plugin_action_links', 'sf_plugin_action_links', 10, 2 );
 // GET OPTION
 $social_feeds_options = get_option( 'sf_options' );
 

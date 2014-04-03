@@ -7,13 +7,6 @@
 add_filter('cron_schedules', 'sf_cron_schedules');
 
 function sf_cron_schedules( $schedules ) {
-	
-	if ( !array_key_exists('every_minute', $schedules) ) {
-		$schedules['every_minute'] = array(
-			'interval' => 60 * 1,
-			'display' => __( 'Every minute' )
-		);
-	}
 
 	if ( !array_key_exists('every_five_minutes', $schedules) ) {
 		$schedules['every_five_minutes'] = array(

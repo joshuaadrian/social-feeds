@@ -168,3 +168,22 @@
   background-color: black;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 99999; }
+
+/************************************************************************/
+/* PINTEREST STYLES
+/************************************************************************/
+body .pinterest-embed > span {
+  padding: 0 !important;
+  border: 0 solid transparent !important;
+  background: transparent !important;
+  border-radius: 0px !important;
+  box-shadow: 0 0 0 transparent !important; }
+  body .pinterest-embed > span > a {
+    display: none !important; }
+  body .pinterest-embed > span span {
+    margin: 0 !important; }
+  body .pinterest-embed > span > span:first-child {
+    display: none !important; }
+    body .pinterest-embed > span > span:first-child + span {
+      margin: 0 !important;
+      height: 280px !important; }

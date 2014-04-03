@@ -126,17 +126,15 @@ function sf_pinterest_feed( $atts, $content = null ) {
 	$content_type = '';
 	$href = '';
 
-	if ( isset( $social_feeds_options['content'] ) ) {
-		$href = $social_feeds_options['content'];
-		$content_type = 'Pin';
+	if ( isset( $social_feeds_options['pinterest_content'] ) ) {
+		$href = $social_feeds_options['pinterest_content'];
 	}
 
 	if ( !empty( $content ) ) {
 		$href = $content;
-		$content_type = 'Pin';
 	}
 
-	$url = parse_url($content);
+	$url = parse_url($href);
 	$paths = explode('/',$url['path']);
 
 	if ( isset( $paths[1] ) && $paths[1] != 'pin' && ( !isset( $paths[2] ) || empty( $paths[2] ) ) ) {
