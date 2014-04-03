@@ -42,6 +42,7 @@ function sf_social_calls() {
 			'consumer_key'              => $social_feeds_options['twitter_consumer_key'],
 			'consumer_secret'           => $social_feeds_options['twitter_consumer_secret']
 		);
+		
 		$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
 		$getfield = '?screen_name='. $twitter_username .'&count='. $twitter_post_count;
 		$requestMethod = 'GET';
