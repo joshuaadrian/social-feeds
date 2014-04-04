@@ -33,7 +33,7 @@ function sf_social_calls() {
 		$twitter_include_entities = isset( $social_feeds_options['twitter_include_entities'] ) && $social_feeds_options['twitter_include_entities'] ? 'true' : 'false';
 
 		// REQUIRE TWITTER API PHP LIBRARY
-		require_once(SF_PATH . 'libs/twitter/twitter_exchange.php');
+		require_once(SF_PATH . 'assets/libs/twitter/twitter_exchange.php');
 
 		// SET ACCESS TOKENS HERE - see: https://dev.twitter.com/apps/
 		$settings = array(
@@ -52,8 +52,8 @@ function sf_social_calls() {
 		            			->performRequest();
 		            			
 		// UPDATE SF OPTION WITH RETURNED TWITTER DATA
-	    $social_feeds_options['twitter_cache'] = removeTwitterEmoji( json_decode( $twitter_data, true, 10 ) );
-	    $social_feeds_options['twitter_log'] = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
+		$social_feeds_options['twitter_cache'] = removeTwitterEmoji( json_decode( $twitter_data, true, 10 ) );
+		$social_feeds_options['twitter_log']   = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
 	    
 	}
 

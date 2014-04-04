@@ -14,7 +14,7 @@ function sf_twitter_feed( $atts, $content = null ) {
 		'count' => '4'
 	), $atts ));
 
-	if ( !isset( $social_feeds_options['twitter_cache'] ) )
+	if ( !isset( $social_feeds_options['twitter_cache'] ) || empty( $social_feeds_options['twitter_cache'] ) )
 		return;
 
 	// SET UP OUTPUT AND GET CACHED TWITTER FEED FILE
@@ -30,7 +30,7 @@ function sf_twitter_feed( $atts, $content = null ) {
 	for ( $i = 0; $i < $count; ++$i ) {
 
 		$twitter_output .= '<li id="tweet-'.$i.'" class="tweet">';
-		$twitter_output .= linkify_twitter_status($tweets[$i]['text']);
+		$twitter_output .= linkify_twitter_status( $tweets[$i]['text'] );
 		$twitter_output .= ' <span class="tweet-time">';
 		$twitter_output .= date( "F j, Y", strtotime($tweets[$i]['created_at']));
 		$twitter_output .= '</span></li>';
