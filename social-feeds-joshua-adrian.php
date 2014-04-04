@@ -93,6 +93,8 @@ function sf_delete_plugin_options() {
 // Define default option settings
 function sf_add_defaults() {
 
+	global $social_feeds_options;
+
   if ( !$social_feeds_options || !is_array( $social_feeds_options ) ) {
 
 		delete_option( 'sf_options' );
