@@ -1,7 +1,29 @@
-(function(d){
-  var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
-  p.type = 'text/javascript';
-  p.async = true;
-  p.src = '//assets.pinterest.com/js/pinit.js';
-  f.parentNode.insertBefore(p, f);
-}(document));
+jQuery( document ).ready(function( $ ) {
+
+	$('.sf-get-feeds').on('click', function( event ) {
+
+		event.preventDefault();
+
+		var button = $(this);
+
+		button.prop('disabled', true);
+
+		$.ajax({
+      type: "POST",
+      url: sf_ajax_object.ajax_url, 
+      data: { action: 'sf_get_feeds' },
+      success: function(response){ 
+        alert("Got this from the server: " + response);
+      },
+      error: function(MLHttpRequest, textStatus, errorThrown){  
+        alert("There was an error: " + errorThrown);  
+      },
+      complete: function() {
+      	button.prop('disabled', false);
+      },
+      timeout: 60000
+  	});    
+
+	});
+
+});

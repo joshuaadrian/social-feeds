@@ -89,7 +89,8 @@ function sf_delete_plugin_options() {
 //
 // OTHERWISE, THE PLUGIN OPTIONS REMAIN UNCHANGED.
 // ------------------------------------------------------------------------------
-//delete_option( 'sf_options' ); sf_add_defaults();
+//delete_option( 'sf_options' );
+//sf_add_defaults();
 // Define default option settings
 function sf_add_defaults() {
 
@@ -105,8 +106,8 @@ function sf_add_defaults() {
 			'twitter_cache'                     => '',
 			'twitter_error_log'                 => '',
 			'twitter_log'                       => '',
-			'twitter_username'                  => 'joshua__adrian',
-			'twitter_search_term'               => '#bananas',
+			'twitter_username'                  => '',
+			'twitter_search_term'               => '',
 			'twitter_include_rts'               => '1',
 			'twitter_include_replies'           => '1',
 			'twitter_include_entities'          => '1',
@@ -114,11 +115,13 @@ function sf_add_defaults() {
 			'twitter_oauth_access_token_secret' => '',
 			'twitter_consumer_key'              => '',
 			'twitter_consumer_secret'           => '',
+			'twitter_status'                    => '',
 			'instagram_cache'                   => '',
 			'instagram_log'                     => '',
 			'instagram_error_log'               => '',
 			'instagram_access_token'            => '',
 			'instagram_user_id'                 => '',
+			'instagram_status'                  => '',
 			'pinterest_pin'                     => '',
 			'pinterest_profile'                 => '',
 			'pinterest_board'                   => ''
@@ -270,7 +273,8 @@ function sf_render_form() {
 				</table>
 
 		    <div class="social-feeds-form-action">
-		      <p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		    	<p class="status">Twitter Feed Status: <span class="success"></span> Instagram Feed Status: <span class="none"></span></p>
+		      <p><button href="#" class="button sf-get-feeds">Manually Retrieve Feeds</button><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
 		    </div>
 
 			</form>
@@ -318,7 +322,7 @@ function sf_render_form() {
 				</table>
 
 		    <div class="social-feeds-form-action">
-		      <p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		      <p><a href="#" class="button">Manually Retrieve Feeds</a><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
 		    </div>
 
 			</form>
@@ -354,7 +358,7 @@ function sf_render_form() {
 				</table>
 
 		    <div class="social-feeds-form-action">
-		      <p><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
+		      <p><a href="#" class="button">Manually Retrieve Feeds</a><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
 		    </div>
 
 			</form>
@@ -393,7 +397,7 @@ function sf_render_form() {
 							    while ( false !== ( $entry = readdir( $handle ) ) ) {
 
 							    	if ($entry != "." && $entry != "..") { ?>
-							        	<option value='<?php echo $entry; ?>' <?php selected($entry, $social_feeds_options['skin']); ?>><?php echo ucwords( str_replace( '-', ' ', $entry ) ); ?></option>
+							        <option value='<?php echo $entry; ?>' <?php selected($entry, $social_feeds_options['skin']); ?>><?php echo ucwords( str_replace( '-', ' ', $entry ) ); ?></option>
 							    	<?php }
 
 							    }
@@ -533,7 +537,8 @@ function sf_enqueue() {
 
   wp_register_style('social_feeds_css', plugins_url('/assets/css/social-feeds.css', __FILE__), false, '1.0.0');
   wp_enqueue_style('social_feeds_css');
-  wp_enqueue_script('social_feeds_scripts', plugins_url('/assets/js/social-feeds.min.js', __FILE__), array('jquery'));
+  wp_enqueue_script('social_feeds_script', plugins_url('/assets/js/social-feeds.min.js', __FILE__), array('jquery'));
+  wp_localize_script( 'social_feeds_script', 'sf_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'value' => 1234 ) );
 
 }
 
@@ -554,6 +559,9 @@ function sf_skin_styles() {
 }
 
 add_action('wp_enqueue_scripts', 'sf_skin_styles');
+
+
+
 
 /************************************************************************/
 /* INCLUDES

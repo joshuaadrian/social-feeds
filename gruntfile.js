@@ -22,8 +22,8 @@ module.exports = function(grunt) {
 
         uglify: {
             build: {
-                src: 'assets/js/widget-context.js',
-                dest: 'assets/js/widget-context.min.js'
+                src: 'assets/js/social-feeds.js',
+                dest: 'assets/js/social-feeds.min.js'
             }
         },
 
@@ -31,8 +31,8 @@ module.exports = function(grunt) {
 
         autoprefixer: {
             file: {
-                src: 'assets/css/widget-context.css',
-                dest: 'assets/css/widget-context.css'
+                src: 'assets/css/social-feeds.css',
+                dest: 'assets/css/social-feeds.css'
             }
         },
 
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         cssmin: {
             minify: {
                 files: {
-                    'assets/css/widget-context.css' : 'assets/css/widget-context.css'
+                    'assets/css/social-feeds.css' : 'assets/css/social-feeds.css'
                 }
             }
         },
