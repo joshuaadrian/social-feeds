@@ -56,7 +56,9 @@ function removeTwitterEmoji( $tweets ) {
 
   foreach ( $tweets as $tweet_key => $tweet ) {
     
-    $cleaned_tweets[$tweet_key]['text'] = removeEmoji( $tweet['text'] );
+    if ( isset( $tweet['text'] ) ) {
+      $cleaned_tweets[$tweet_key]['text'] = removeEmoji( $tweet['text'] );
+    }
 
     if ( isset( $tweet['retweeted_status']['text'] ) ) {
       $cleaned_tweets[$tweet_key]['retweeted_status']['text'] = removeEmoji( $tweet['retweeted_status']['text'] );
@@ -229,44 +231,48 @@ function sf_get_feeds_callback() {
   endif;
 
   // CHECK FOR TWITTER INFO
-  if ( isset( $social_feeds_options['twitter_username'] ) && isset( $social_feeds_options['twitter_oauth_access_token'] ) && isset( $social_feeds_options['twitter_oauth_access_token_secret'] ) && isset( $social_feeds_options['twitter_consumer_key'] ) && isset( $social_feeds_options['twitter_consumer_secret'] ) ) {
+  if ( isset( $social_feeds_options['twitter_username'] ) && !empty( $social_feeds_options['twitter_username'] ) && isset( $social_feeds_options['twitter_access_token'] ) && isset( $social_feeds_options['twitter_access_token_secret'] ) && isset( $social_feeds_options['twitter_api_key'] ) && isset( $social_feeds_options['twitter_api_secret'] ) ) {
 
     // TWITTER VARIABLES
     $twitter_username         = $social_feeds_options['twitter_username'];
-    $twitter_post_count       = 20;
+    $twitter_post_count       = 30;
     $twitter_include_rts      = isset( $social_feeds_options['twitter_include_rts'] ) && $social_feeds_options['twitter_include_rts'] ? 'true' : 'false';
-    $twitter_include_replies  = isset( $social_feeds_options['twitter_include_replies'] ) && $social_feeds_options['twitter_include_replies'] ? 'true' : 'false';
+    $twitter_include_replies  = isset( $social_feeds_options['twitter_include_replies'] ) && $social_feeds_options['twitter_include_replies'] ? 'false' : 'true';
     $twitter_include_entities = isset( $social_feeds_options['twitter_include_entities'] ) && $social_feeds_options['twitter_include_entities'] ? 'true' : 'false';
 
     // REQUIRE TWITTER API PHP LIBRARY
-    require_once(SF_PATH . 'assets/libs/twitter/twitter_exchange.php');
+    require_once( SF_PATH . 'assets/libs/twitter/twitter_exchange.php' );
 
     // SET ACCESS TOKENS HERE - see: https://dev.twitter.com/apps/
     $settings = array(
-      'oauth_access_token'        => $social_feeds_options['twitter_oauth_access_token'],
-      'oauth_access_token_secret' => $social_feeds_options['twitter_oauth_access_token_secret'],
-      'consumer_key'              => $social_feeds_options['twitter_consumer_key'],
-      'consumer_secret'           => $social_feeds_options['twitter_consumer_secret']
+      'oauth_access_token'        => $social_feeds_options['twitter_access_token'],
+      'oauth_access_token_secret' => $social_feeds_options['twitter_access_token_secret'],
+      'consumer_key'              => $social_feeds_options['twitter_api_key'],
+      'consumer_secret'           => $social_feeds_options['twitter_api_secret']
     );
     
-    $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-    $getfield = '?screen_name='. $twitter_username .'&count='. $twitter_post_count;
+    $url           = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+    $getfield      = '?screen_name=' .  $twitter_username .'&include_entities=' . $twitter_include_entities . '&exclude_replies=' . $twitter_include_replies . '&include_rts=' . $twitter_include_rts . '&count='. $twitter_post_count;
     $requestMethod = 'GET';
-    $twitter = new TwitterAPIExchange($settings);
-    $twitter_data = $twitter->setGetfield($getfield)
-                      ->buildOauth($url, $requestMethod)
-                      ->performRequest();
+    $twitter       = new TwitterAPIExchange($settings);
+    $twitter_data  = $twitter->setGetfield($getfield)
+                             ->buildOauth($url, $requestMethod)
+                             ->performRequest();
                       
     // UPDATE SF OPTION WITH RETURNED TWITTER DATA
-    $social_feeds_options['twitter_cache'] = isset( $twitter_data['errors'] ) ? removeTwitterEmoji( json_decode( $twitter_data, true, 10 ) ) : false;
-    $social_feeds_options['twitter_log']   = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
-
-    $output['twitter'] = $social_feeds_options['twitter_cache'] ? true : false;
+    $social_feeds_options['twitter_cache']  = isset( $twitter_data['errors'] ) ? false : removeTwitterEmoji( json_decode( $twitter_data, true, 10 ) );
+    $social_feeds_options['twitter_log']    = date("F j, Y, g:i a") . ' twitter success | rest call url =>  ' . $url . "\r\n\n";
+    $social_feeds_options['twitter_status'] = $social_feeds_options['twitter_cache'] ? 'success' : 'error';
+    $output['twitter']                      = $social_feeds_options['twitter_cache'] ? true : false;
       
+  } else {
+
+    $social_feeds_options['twitter_status'] = 'none';
+
   }
 
   // CHECK FOR INSTAGRAM INFO
-  if ( isset( $social_feeds_options['instagram_user_id'] ) ) {
+  if ( isset( $social_feeds_options['instagram_user_id'] ) && !empty( $social_feeds_options['instagram_user_id'] ) ) {
 
     // INSTAGRAM VARIABLES
     $instagram_access_token  = $social_feeds_options['instagram_access_token'];
@@ -289,13 +295,19 @@ function sf_get_feeds_callback() {
     //_log($instagrams['data'][1]);
     // CHECK FOR ERRORS AND WRITE JSON TO FILE
     if ( $instagrams['meta']['code'] == 200 ) {
-      $social_feeds_options['instagram_cache'] = removeInstagramEmoji( $instagrams['data'] );
-      $social_feeds_options['instagram_log'] = date("F j, Y, g:i a") . ' instagram success | rest call url =>  ' . $instagram_url . "\r\n\n";
+      $social_feeds_options['instagram_cache']  = removeInstagramEmoji( $instagrams['data'] );
+      $social_feeds_options['instagram_log']    = date("F j, Y, g:i a") . ' instagram success | rest call url =>  ' . $instagram_url . "\r\n\n";
+      $social_feeds_options['instagram_status'] = 'success';
     } else {
       $social_feeds_options['instagram_error_log'] = date("F j, Y, g:i a") . ' instagram error json => ' . $instagram_data . ' | rest call url =>  ' . $instagram_url . "\r\n\n";
+      $social_feeds_options['instagram_status']    = 'error';
     }
 
     $output['instagram'] = isset( $instagrams['meta']['code'] ) && $instagrams['meta']['code'] == 200 ? true : false;
+
+  } else {
+
+    $social_feeds_options['instagram_status'] = 'none';
 
   }
 

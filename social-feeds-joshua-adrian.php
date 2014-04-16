@@ -89,8 +89,8 @@ function sf_delete_plugin_options() {
 //
 // OTHERWISE, THE PLUGIN OPTIONS REMAIN UNCHANGED.
 // ------------------------------------------------------------------------------
-//delete_option( 'sf_options' );
-//sf_add_defaults();
+// delete_option( 'sf_options' );
+// sf_add_defaults();
 // Define default option settings
 function sf_add_defaults() {
 
@@ -101,30 +101,30 @@ function sf_add_defaults() {
 		delete_option( 'sf_options' );
 
 		$sf_defaults = array(
-			'cron_frequency'                    => 'every_fifteen_minutes',
-			'skin'                              => 'none',
-			'twitter_cache'                     => '',
-			'twitter_error_log'                 => '',
-			'twitter_log'                       => '',
-			'twitter_username'                  => '',
-			'twitter_search_term'               => '',
-			'twitter_include_rts'               => '1',
-			'twitter_include_replies'           => '1',
-			'twitter_include_entities'          => '1',
-			'twitter_oauth_access_token'        => '',
-			'twitter_oauth_access_token_secret' => '',
-			'twitter_consumer_key'              => '',
-			'twitter_consumer_secret'           => '',
-			'twitter_status'                    => '',
-			'instagram_cache'                   => '',
-			'instagram_log'                     => '',
-			'instagram_error_log'               => '',
-			'instagram_access_token'            => '',
-			'instagram_user_id'                 => '',
-			'instagram_status'                  => '',
-			'pinterest_pin'                     => '',
-			'pinterest_profile'                 => '',
-			'pinterest_board'                   => ''
+			'cron_frequency'              => 'every_fifteen_minutes',
+			'skin'                        => 'none',
+			'twitter_cache'               => '',
+			'twitter_error_log'           => '',
+			'twitter_log'                 => '',
+			'twitter_username'            => '',
+			'twitter_search_term'         => '',
+			'twitter_include_rts'         => '1',
+			'twitter_include_replies'     => '1',
+			'twitter_include_entities'    => '1',
+			'twitter_access_token'        => '',
+			'twitter_access_token_secret' => '',
+			'twitter_api_key'             => '',
+			'twitter_api_secret'          => '',
+			'twitter_status'              => 'none',
+			'instagram_cache'             => '',
+			'instagram_log'               => '',
+			'instagram_error_log'         => '',
+			'instagram_access_token'      => '',
+			'instagram_user_id'           => '',
+			'instagram_status'            => 'none',
+			'pinterest_pin'               => '',
+			'pinterest_profile'           => '',
+			'pinterest_board'             => ''
 		);
 
 		update_option( 'sf_options', $sf_defaults );
@@ -201,7 +201,7 @@ function sf_render_form() {
 		    	<tr>
 
 			    	<th>
-			    		<label for="twitter_user">Twitter User</label>
+			    		<label for="twitter_user">User</label>
 			    	</th>
 
 			    	<td> 
@@ -213,11 +213,11 @@ function sf_render_form() {
 					<tr>
 
 				    	<th>
-				    		<label for="twitter_consumer_key">Twitter API Key</label>
+				    		<label for="twitter_api_key">API Key</label>
 				    	</th>
 
 				    	<td> 
-				    		<input type="text" size="57" id="twitter_consumer_key" name="sf_options[twitter_consumer_key]" value="<?php echo $social_feeds_options['twitter_consumer_key']; ?>" />
+				    		<input type="text" size="57" id="twitter_api_key" name="sf_options[twitter_api_key]" value="<?php echo $social_feeds_options['twitter_api_key']; ?>" />
 						</td>
 
 					</tr>
@@ -225,11 +225,11 @@ function sf_render_form() {
 					<tr>
 
 				    	<th>
-				    		<label for="twitter_consumer_secret">Twitter API Secret</label>
+				    		<label for="twitter_api_secret">API Secret</label>
 				    	</th>
 
 				    	<td> 
-				    		<input type="text" size="57" id="twitter_consumer_secret" name="sf_options[twitter_consumer_secret]" value="<?php echo $social_feeds_options['twitter_consumer_secret']; ?>" />
+				    		<input type="text" size="57" id="twitter_api_secret" name="sf_options[twitter_api_secret]" value="<?php echo $social_feeds_options['twitter_api_secret']; ?>" />
 						</td>
 
 					</tr>
@@ -237,11 +237,11 @@ function sf_render_form() {
 					<tr>
 
 			    	<th>
-			    		<label for="twitter_oauth_access_token">Twitter Access Token</label>
+			    		<label for="twitter_access_token">Access Token</label>
 			    	</th>
 
 			    	<td> 
-			    		<input type="text" size="57" id="twitter_oauth_access_token" name="sf_options[twitter_oauth_access_token]" value="<?php echo $social_feeds_options['twitter_oauth_access_token']; ?>" />
+			    		<input type="text" size="57" id="twitter_access_token" name="sf_options[twitter_access_token]" value="<?php echo $social_feeds_options['twitter_access_token']; ?>" />
 						</td>
 
 					</tr>
@@ -249,11 +249,11 @@ function sf_render_form() {
 					<tr>
 
 			    	<th>
-			    		<label for="twitter_oauth_access_token_secret">Twitter Access Token Secret</label>
+			    		<label for="twitter_access_token_secret">Access Token Secret</label>
 			    	</th>
 
 			    	<td> 
-			    		<input type="text" size="57" id="twitter_oauth_access_token_secret" name="sf_options[twitter_oauth_access_token_secret]" value="<?php echo $social_feeds_options['twitter_oauth_access_token_secret']; ?>" />
+			    		<input type="text" size="57" id="twitter_access_token_secret" name="sf_options[twitter_access_token_secret]" value="<?php echo $social_feeds_options['twitter_access_token_secret']; ?>" />
 						</td>
 
 					</tr>
@@ -273,7 +273,7 @@ function sf_render_form() {
 				</table>
 
 		    <div class="social-feeds-form-action">
-		    	<p class="status">Twitter Feed Status: <span class="success"></span> Instagram Feed Status: <span class="none"></span></p>
+		    	<p class="status">Twitter Feed Status: <span class="<?php echo $social_feeds_options['twitter_status']; ?>"></span> Instagram Feed Status: <span class="<?php echo $social_feeds_options['instagram_status']; ?>"></span></p>
 		      <p><button href="#" class="button sf-get-feeds">Manually Retrieve Feeds</button><input name="Submit" type="submit" value="<?php esc_attr_e('Update Settings'); ?>" class="button-primary" /></p>
 		    </div>
 
@@ -493,10 +493,10 @@ function sf_validate_options( $input ) {
 	$input['twitter_error_log']                 = isset( $input['twitter_error_log'] ) ? $input['twitter_error_log'] : $social_feeds_options['twitter_error_log'];
 	$input['twitter_username']                  = isset( $input['twitter_username'] ) ? wp_filter_nohtml_kses( $input['twitter_username'] ) : $social_feeds_options['twitter_username'];
 	//$input['twitter_search_term']             = wp_filter_nohtml_kses($input['twitter_search_term']);
-	$input['twitter_oauth_access_token']        = isset( $input['twitter_oauth_access_token'] ) ? wp_filter_nohtml_kses( $input['twitter_oauth_access_token'] ) : $social_feeds_options['twitter_oauth_access_token'];
-	$input['twitter_oauth_access_token_secret'] = isset( $input['twitter_oauth_access_token_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_oauth_access_token_secret'] ) : $social_feeds_options['twitter_oauth_access_token_secret'];
-	$input['twitter_consumer_key']              = isset( $input['twitter_consumer_key'] ) ? wp_filter_nohtml_kses( $input['twitter_consumer_key'] ) : $social_feeds_options['twitter_consumer_key'];
-	$input['twitter_consumer_secret']           = isset( $input['twitter_consumer_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_consumer_secret'] ) : $social_feeds_options['twitter_consumer_secret'];
+	$input['twitter_access_token']        = isset( $input['twitter_access_token'] ) ? wp_filter_nohtml_kses( $input['twitter_access_token'] ) : $social_feeds_options['twitter_access_token'];
+	$input['twitter_access_token_secret'] = isset( $input['twitter_access_token_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_access_token_secret'] ) : $social_feeds_options['twitter_access_token_secret'];
+	$input['twitter_api_key']              = isset( $input['twitter_api_key'] ) ? wp_filter_nohtml_kses( $input['twitter_api_key'] ) : $social_feeds_options['twitter_api_key'];
+	$input['twitter_api_secret']           = isset( $input['twitter_api_secret'] ) ? wp_filter_nohtml_kses( $input['twitter_api_secret'] ) : $social_feeds_options['twitter_api_secret'];
 	$input['twitter_include_rts']               = isset( $input['twitter_include_rts'] ) ? wp_filter_nohtml_kses( $input['twitter_include_rts'] ) : $social_feeds_options['twitter_include_rts'];
 	$input['twitter_include_replies']           = isset( $input['twitter_include_replies'] ) ? wp_filter_nohtml_kses( $input['twitter_include_replies'] ) : $social_feeds_options['twitter_include_replies'];
 	$input['twitter_include_entities']          = isset( $input['twitter_include_entities'] ) ? wp_filter_nohtml_kses( $input['twitter_include_entities'] ) : $social_feeds_options['twitter_include_entities'];
